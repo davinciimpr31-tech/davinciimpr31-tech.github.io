@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaVinci | Digital Atelier</title>
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #bb0b1b;
+            --secondary-color: #bb0b1b;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #7f8c8d;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #fff;
+            -webkit-text-size-adjust: 100%; /* Empêche le zoom texte sur iOS */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: var(--transition);
+            min-height: 50px; /* Taille tactile minimum */
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Header et Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .logo span {
+            color: #bb0b1b;
+        }
+
+        .nav-links {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 8px 0; /* Zone cliquable agrandie */
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            min-width: 44px; /* Taille tactile */
+            min-height: 44px;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 600px; /* Hauteur minimum sur mobile */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1920x1080/?work') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+            padding: 20px 0;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 10px;
+        }
+
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            min-width: 140px; /* Largeur minimum pour tactile */
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+
+        /* À propos */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .skills {
+            margin-top: 30px;
+        }
+
+        .skill-item {
+            margin-bottom: 20px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* Services */
+        .services {
+            background-color: #f9f9f9;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background-color: white;
+            padding: 25px 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            min-height: 280px; /* Hauteur uniforme */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* forfaits*/
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 25px;
+            transition: var(--transition);
+            min-height: 44px; /* Taille tactile */
+            font-size: 0.95rem;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .portfolio-item {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            cursor: pointer;
+            aspect-ratio: 4/3; /* Ratio constant */
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(52, 152, 219, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        /* STYLES POUR LES ITEMS AVEC TITRE */
+        .portfolio-item-with-title {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .image-title {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark-color);
+            text-align: center;
+            margin: 0;
+            padding: 0 10px;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .image-subtitle {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            text-align: center;
+            margin: 0;
+            padding: 0 10px;
+            line-height: 1.4;
+        }
+
+        /* STYLES MODAL ZOOM AVEC CONTROLES */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+            -webkit-overflow-scrolling: touch; /* Scroll fluide iOS */
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 95%;
+            max-height: 80%;
+            transition: transform 0.3s ease;
+            cursor: grab;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        .modal-content:active {
+            cursor: grabbing;
+        }
+
+        .modal-content.zoomed {
+            cursor: zoom-out;
+        }
+
+        /* Contrôles de zoom */
+        .zoom-controls {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px 15px;
+            border-radius: 25px;
+            z-index: 2001;
+            backdrop-filter: blur(10px);
+        }
+
+        .zoom-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            min-width: 44px; /* Taille tactile */
+        }
+
+        .zoom-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        .zoom-reset {
+            background: #666;
+            font-size: 14px;
+        }
+
+        .zoom-reset:hover {
+            background: #888;
+        }
+
+        /* Indicateur de zoom */
+        .zoom-level {
+            color: white;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes zoomIn {
+            from {transform: translate(-50%, -50%) scale(0.5);}
+            to {transform: translate(-50%, -50%) scale(1);}
+        }
+
+        /* Bouton fermeture */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 2001;
+            transition: var(--transition);
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+            background: rgba(0,0,0,0.7);
+        }
+
+        /* Témoignages */
+        .testimonials {
+            background-color: #f9f9f9;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-item {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .author-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        /* Contact */
+        .contact-content {
+            display: flex;
+            gap: 40px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .contact-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            min-height: 50px; /* Taille tactile */
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            gap: 30px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-col p {
+            margin-bottom: 15px;
+            color: #bdc3c7;
+            font-size: 0.95rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            padding: 4px 0;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.85rem;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+
+        /* Tablettes */
+        @media (max-width: 992px) {
+            .about-content, .contact-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .about-img, .about-text, .contact-info, .contact-form {
+                width: 100%;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 50px 0;
+            }
+        }
+
+        /* Mobiles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 40px;
+                transition: var(--transition);
+                gap: 0;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .nav-links a {
+                display: block;
+                padding: 15px 20px;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+            
+            .hero {
+                min-height: 500px;
+                margin-top: 60px;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.8rem;
+                padding: 0 10px;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                min-height: 54px;
+                font-size: 1.1rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service-card {
+                min-height: auto;
+                padding: 20px 15px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .footer-col {
+                min-width: 100%;
+            }
+
+            /* Titres responsive */
+            .image-title {
+                font-size: 1.2rem;
+            }
+            
+            .image-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Petits mobiles */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+            
+            .hero-content h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero-content p {
+                font-size: 0.95rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.4rem;
+            }
+            
+            .about-text h3 {
+                font-size: 1.3rem;
+            }
+            
+            .service-card h3 {
+                font-size: 1.2rem;
+            }
+            
+            .portfolio-overlay h3 {
+                font-size: 1.1rem;
+            }
+            
+            .modal-content {
+                max-width: 98%;
+                max-height: 70%;
+            }
+            
+            .zoom-controls {
+                bottom: 10px;
+                padding: 8px 12px;
+            }
+            
+            .zoom-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            
+            .zoom-level {
+                font-size: 12px;
+                padding: 0 8px;
+            }
+            
+            .close {
+                top: 10px;
+                right: 15px;
+                font-size: 30px;
+                width: 40px;
+                height: 40px;
+            }
+
+            /* Titres petit mobile */
+            .image-title {
+                font-size: 1.1rem;
+            }
+            
+            .image-subtitle {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Améliorations tactiles */
+        @media (hover: none) and (pointer: coarse) {
+            .portfolio-item:hover .portfolio-overlay {
+                opacity: 0.8; /* Visible au touché */
+            }
+            
+            .portfolio-overlay {
+                opacity: 0.8; /* Toujours visible sur mobile */
+            }
+            
+            .service-card:hover {
+                transform: none;
+            }
+            
+            .btn:hover, .zoom-btn:hover, .social-link:hover {
+                transform: none;
+            }
+        }
+
+        /* Support des navigateurs mobiles */
+        @supports (-webkit-touch-callout: none) {
+            .hero {
+                height: -webkit-fill-available;
+                min-height: -webkit-fill-available;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Da<span>Vinci</span></a>
+                <div class="menu-toggle">☰</div>
+                <ul class="nav-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#a-propos">À propos</a></li>
+                    <li><a href="#services">Nos Services</a></li>
+                    <li><a href="#portfolio">Nos Forfaits</a></li>
+                    <!--<li><a href="#temoignages">Témoignages</a></li>-->
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <h1>DaVinci | Atelier Digital</h1>
+                <p style="text-align: justify; text-justify: inter-word;">Dans l'esprit de l'idéal de la Renaissance originelle, cet atelier est le lieu où la vision créative et la précision technique ne font qu'une. Nous façonnons des univers numériques cohérents en alliant développement full-stack, design graphique sur mesure et contenu captivant, pour construire une identité en ligne unique et puissante pour votre marque.</p>
+                <div class="hero-btns">
+                    <a href="#portfolio" class="btn">Nos Forfaits</a>
+                    <a href="#contact" class="btn btn-outline">Contactez-Nous</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- À propos -->
+    <section class="section" id="a-propos">
+        <div class="container">
+            <div class="section-title">
+                <h2>À propos</h2>
+                <p>Découvrez qui je suis et ce que je fais</p>
+            </div>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="davinciatelier.jpg" alt="DaVinci Digital Atelier" loading="lazy">
+            </div>
+                <div class="about-text">
+                    <h3>DaVinci : L'Atelier Digital de la Nouvelle Renaissance</h3>
+                    <p>Inspiré par l'esprit universel de Léonard de Vinci, notre atelier digital incarne la fusion parfaite entre <strong>l'art créatif</strong>, la <strong>précision technique</strong> et la <strong>stratégie visionnaire</strong>. Nous ne créons pas simplement des sites web - nous concevons des écosystèmes digitaux complets qui transforment votre vision en réalité tangible.</p>
+                
+                <p>Notre approche repose sur trois piliers fondamentaux, à l'image des trois grands domaines d'expertise du maître de la Renaissance :</p>
+                    
+                    <div class="skills">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>🏗️ Développement Web Architectural</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">Des fondations techniques robustes pour des sites performants, sécurisés et évolutifs</p>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>🎨 Design UI/UX Humaniste</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 92%"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">Des interfaces qui marient esthétique et ergonomie pour une expérience utilisateur mémorable</p>
+                    </div>
+                    
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>🚀 Marketing Digital Stratégique</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                        <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 5px;">Des campagnes ciblées qui amplifient votre présence et convertissent vos visiteurs en clients</p>
+                    </div>
+                </div>
+                <p style="margin-top: 20px;"><strong>Notre philosophie :</strong> Tout comme Léonard voyait au-delà des limites de son époque, nous anticipons les tendances digitales pour vous offrir des solutions non seulement actuelles, mais aussi préparées pour l'avenir. Chaque projet est traité comme une œuvre d'art unique, où chaque ligne de code, chaque pixel et chaque stratégie contribuent à créer une identité digitale distinctive.</p>
+                
+                <p>Que vous soyez une startup ambitieuse, une PME en croissance ou une entreprise établie, nos <strong>forfaits sur-mesure</strong> sont conçus pour s'adapter parfaitement à vos besoins, votre budget et vos objectifs spécifiques.</p>
+                    
+                    <a href="#portfolio" class="btn" style="margin-top: 30px;">Découvrez nos forfaits sur-mesure</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Services</h2>
+                <p>Ce que nous proposons à nos clients</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Développement Web</h3>
+                    <p>Création de sites web responsifs et performants utilisant les dernières technologies pour une expérience utilisateur optimale.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Design UI/UX</h3>
+                    <p>Conception d'interfaces utilisateur attrayantes et d'expériences utilisateur fluides qui engagent et convertissent.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📢</div>
+                    <h3>Marketing Digital</h3>
+                    <p>Stratégies de marketing digital complètes incluant SEO, publicités en ligne, marketing des médias sociaux et analyse de données pour maximiser votre visibilité en ligne.</p>
+                </div>
+                <!--<div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>SEO & Marketing</h3>
+                    <p>Optimisation pour les moteurs de recherche et stratégies de marketing digital pour augmenter votre visibilité en ligne.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>E-commerce</h3>
+                    <p>Création de boutiques en ligne complètes avec systèmes de paiement sécurisés et gestion des stocks.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Maintenance</h3>
+                    <p>Services de maintenance et de support continu pour garantir la performance et la sécurité de votre site web.</p>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Forfaits -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Forfaits</h2>
+                <p>Découvrez nos forfaits digitales - L'excellence technique au service de votre réussite en ligne.<br>
+                Des solutions sur-mesure qui transforment votre vision en résultats concrets</p>
+            </div>
+            <div class="portfolio-filter">
+                <button class="filter-btn active" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="designuxui">Design UI/UX</button>
+                <button class="filter-btn" data-filter="sponsoring">Sponsoring</button>
+            </div>
+            <div class="portfolio-grid">
+                <!-- === WEB - 4 CASES === -->
+                <!-- Mona Lisa - Web -->
+                <div class="portfolio-item-with-title" data-category="web">
+                    <div class="portfolio-item" onclick="openModal('forfaitmonalisa.jpg')">
+                        <img src="monalisa.png" alt="Forfait Excellence Digital" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>Mona Lisa</h3>
+                            <p>Site vitrine</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">Mona Lisa</h3>
+                    <p class="image-subtitle">Site Vitrine</p>
+                </div>
+
+                <!-- Homme de Vitruve - Web -->
+                <div class="portfolio-item-with-title" data-category="web">
+                    <div class="portfolio-item" onclick="openModal('forfaitvitruve.jpg')">
+                        <img src="hommevitruve.png" alt="Forfait Vitruve Digital" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>Homme De Vitruve</h3>
+                            <p>Site Dynamique</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">Homme De Vitruve</h3>
+                    <p class="image-subtitle">Site Dynamique</p>
+                </div>
+
+                <!-- La Cène - Web -->
+                <div class="portfolio-item-with-title" data-category="web">
+                    <div class="portfolio-item" onclick="openModal('forfaitcene.jpg')">
+                        <img src="lacene.png" alt="Forfait Cène Digital" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>La Cène</h3>
+                            <p>Site E-Commerce</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">La Cène</h3>
+                    <p class="image-subtitle">Site E-commerce</p>
+                </div>
+
+                <!-- Salvator Mundi - Web -->
+                <div class="portfolio-item-with-title" data-category="web">
+                    <div class="portfolio-item" onclick="openModal('forfaitsalvator.jpg')">
+                        <img src="salvatormundi.png" alt="Forfait Salvator Digital" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>Salvator Mundi</h3>
+                            <p>Refonte de site</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">Salvator Mundi</h3>
+                    <p class="image-subtitle">Refonte de Site</p>
+                </div>
+
+                <!-- === Design UI/UX - 4 CASES === -->
+                <!-- En cours -->
+                <div class="portfolio-item-with-title" data-category="designuxui">
+                    <div class="portfolio-item" onclick="openModal('forfaitfitness.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?fitness-app" alt="Forfait designuxui" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!-- En cours -->
+                <div class="portfolio-item-with-title" data-category="designuxui">
+                    <div class="portfolio-item" onclick="openModal('forfaitfinance.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?finance-app" alt="Forfait designuxui" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!--  Design UI/UX -->
+                <div class="portfolio-item-with-title" data-category="designuxui">
+                    <div class="portfolio-item" onclick="openModal('forfaitsocial.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?social-app" alt="Forfait designuxui" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!--  Design UI/UX -->
+                <div class="portfolio-item-with-title" data-category="designuxui">
+                    <div class="portfolio-item" onclick="openModal('forfaitecommerce.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?shopping-app" alt="Forfait designuxui" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!-- === SPONSORING - 4 CASES === -->
+                <!--  Sponsoring -->
+                <div class="portfolio-item-with-title" data-category="sponsoring">
+                    <div class="portfolio-item" onclick="openModal('forfaitidentite.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?branding" alt="Forfait Sponsoring" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!--  Sponsoring -->
+                <div class="portfolio-item-with-title" data-category="sponsoring">
+                    <div class="portfolio-item" onclick="openModal('forfaituiux.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?ui-design" alt="Forfait Sponsoring" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!-- Packaging - Sponsoring -->
+                <div class="portfolio-item-with-title" data-category="sponsoring">
+                    <div class="portfolio-item" onclick="openModal('forfaitpackaging.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?packaging" alt="Forfait Sponsoring" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+
+                <!-- Motion Design - Sponsoring -->
+                <div class="portfolio-item-with-title" data-category="sponsoring">
+                    <div class="portfolio-item" onclick="openModal('forfaitmotion.jpg')">
+                        <img src="https://source.unsplash.com/random/600x400/?motion-design" alt="Forfait Sponsoring" class="portfolio-img" loading="lazy">
+                        <div class="portfolio-overlay">
+                            <h3>En Cours..</h3>
+                            <p>En Cours..</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">👆 Cliquez pour zoomer</p>
+                        </div>
+                    </div>
+                    <h3 class="image-title">En Cours..</h3>
+                    <p class="image-subtitle">En Cours..</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contactez-nous</h2>
+                <p>Travaillons ensemble</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h3>Belgaid au centre Commercial BenMelissa</h3>
+                            <p>Oran, Algérie</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h3>Téléphone</h3>
+                            <p>05.57.05.88.25</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>davinci.impr31@gmail.com</p>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="name" placeholder="Votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder="Votre email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="subject" placeholder="Sujet" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="message" placeholder="Votre message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Envoyer le message</button>
+                    <div id="formMessage" style="margin-top: 15px; display: none;"></div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>À propos</h3>
+                    <p style="text-align: justify; text-justify: inter-word;">Inspiré par l'esprit universel de Léonard de Vinci, notre atelier digital incarne la fusion parfaite entre <strong>l'art créatif</strong>, la <strong>précision technique</strong> et la <strong>stratégie visionnaire</strong>. Nous ne créons pas simplement des sites web  nous concevons des écosystèmes digitaux complets qui transforment votre vision en réalité tangible.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Liens rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#a-propos">À propos</a></li>
+                        <li><a href="#services">Nos Services</a></li>
+                        <li><a href="#portfolio">Nos Forfaits</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#portfolio">Développement Web</a></li>
+                        <li><a href="#portfolio">Design UI/UX</a></li>
+                        <li><a href="#portfolio">Sponsoring</a></li>
+
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p>Belgaid au centre Commercial BenMelissa</p>
+                    <p>📍 Oran, Algérie</p>
+                    <p>📞 05.57.05.88.25</p>
+                    <p>✉️ davinci.impr31@gmail.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 DaVinci Atelier Digital. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Zoom -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="zoomedImage">
+        <div class="zoom-controls">
+            <button class="zoom-btn" onclick="zoomOut()">−</button>
+            <button class="zoom-btn zoom-reset" onclick="resetZoom()">⟲</button>
+            <button class="zoom-btn" onclick="zoomIn()">+</button>
+            <div class="zoom-level" id="zoomLevel">100%</div>
+        </div>
+    </div>
+
+    <script>
+        // Variables pour le zoom
+        let currentScale = 1;
+        const minScale = 0.5;
+        const maxScale = 5;
+        const scaleStep = 0.25;
+        let isDragging = false;
+        let startX, startY, scrollLeft, scrollTop;
+
+        // Menu mobile toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Filtrage du portfolio - MODIFIÉ
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Retirer la classe active de tous les boutons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Ajouter la classe active au bouton cliqué
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                // Afficher seulement les éléments de la catégorie sélectionnée
+                document.querySelectorAll('.portfolio-item-with-title').forEach(item => {
+                    if (item.getAttribute('data-category') === filter) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Au chargement, afficher seulement la catégorie Web
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.portfolio-item-with-title').forEach(item => {
+                if (item.getAttribute('data-category') !== 'web') {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Fermer le menu mobile en cliquant sur un lien
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Animation au défilement
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.backgroundColor = 'white';
+                header.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // FONCTIONS MODAL ZOOM AVEC CONTROLES
+        function openModal(imageSrc) {
+            document.getElementById('myModal').style.display = 'block';
+            document.getElementById('zoomedImage').src = imageSrc;
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            
+            // Réinitialiser le zoom
+            resetZoom();
+            
+            // Ajouter les événements de drag
+            const modalContent = document.getElementById('zoomedImage');
+            modalContent.addEventListener('mousedown', startDrag);
+            modalContent.addEventListener('touchstart', startDragTouch);
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.documentElement.style.overflow = 'auto';
+            
+            // Retirer les événements de drag
+            const modalContent = document.getElementById('zoomedImage');
+            modalContent.removeEventListener('mousedown', startDrag);
+            modalContent.removeEventListener('touchstart', startDragTouch);
+        }
+
+        function zoomIn() {
+            if (currentScale < maxScale) {
+                currentScale += scaleStep;
+                applyZoom();
+            }
+        }
+
+        function zoomOut() {
+            if (currentScale > minScale) {
+                currentScale -= scaleStep;
+                applyZoom();
+            }
+        }
+
+        function resetZoom() {
+            currentScale = 1;
+            applyZoom();
+            
+            // Réinitialiser la position
+            const modalContent = document.getElementById('zoomedImage');
+            modalContent.style.left = '50%';
+            modalContent.style.top = '50%';
+        }
+
+        function applyZoom() {
+            const modalContent = document.getElementById('zoomedImage');
+            modalContent.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+            
+            // Mettre à jour l'indicateur de zoom
+            document.getElementById('zoomLevel').textContent = Math.round(currentScale * 100) + '%';
+            
+            // Changer le curseur si zoomé
+            if (currentScale > 1) {
+                modalContent.classList.add('zoomed');
+            } else {
+                modalContent.classList.remove('zoomed');
+            }
+        }
+
+        // Fonctions de drag (glisser-déposer)
+        function startDrag(e) {
+            e.preventDefault();
+            if (currentScale <= 1) return;
+            
+            isDragging = true;
+            startX = e.pageX;
+            startY = e.pageY;
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        function startDragTouch(e) {
+            e.preventDefault();
+            if (currentScale <= 1) return;
+            
+            isDragging = true;
+            startX = e.touches[0].pageX;
+            startY = e.touches[0].pageY;
+            
+            document.addEventListener('touchmove', dragTouch);
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const modalContent = document.getElementById('zoomedImage');
+            const x = e.pageX;
+            const y = e.pageY;
+            
+            const walkX = (x - startX) * 2;
+            const walkY = (y - startY) * 2;
+            
+            modalContent.style.left = `calc(50% + ${walkX}px)`;
+            modalContent.style.top = `calc(50% + ${walkY}px)`;
+        }
+
+        function dragTouch(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            
+            const modalContent = document.getElementById('zoomedImage');
+            const x = e.touches[0].pageX;
+            const y = e.touches[0].pageY;
+            
+            const walkX = (x - startX) * 2;
+            const walkY = (y - startY) * 2;
+            
+            modalContent.style.left = `calc(50% + ${walkX}px)`;
+            modalContent.style.top = `calc(50% + ${walkY}px)`;
+        }
+
+        function stopDrag() {
+            isDragging = false;
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('touchmove', dragTouch);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+
+        // Fermer en cliquant en dehors de l'image
+        document.getElementById('myModal').onclick = function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        }
+
+        // Fermer avec la touche Échap
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Zoom avec la molette de la souris
+        document.getElementById('zoomedImage').addEventListener('wheel', function(e) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                zoomIn();
+            } else {
+                zoomOut();
+            }
+        });
+
+        // Empêcher le zoom de la page sur mobile avec double-tap
+        document.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 1) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(e) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+    <script>
+    // Gestion du formulaire de contact
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const form = this;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        const messageDiv = document.getElementById('formMessage');
+        
+        // Afficher "Envoi en cours..."
+        submitBtn.textContent = 'Envoi en cours...';
+        submitBtn.disabled = true;
+        messageDiv.style.display = 'none';
+        
+        // Récupérer les données du formulaire
+        const formData = new FormData(form);
+        
+        // Solution 1 : Utiliser Formspree (GRATUIT)
+        fetch('https://formspree.io/f/mrbnkbyr', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                messageDiv.textContent = '✅ Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.';
+                messageDiv.style.color = 'green';
+                form.reset();
+            } else {
+                throw new Error('Erreur lors de l\'envoi');
+            }
+        })
+        .catch(error => {
+            messageDiv.textContent = '❌ Une erreur est survenue. Vous pouvez aussi m\'envoyer un email directement à davinci.impr31@gmail.com';
+            messageDiv.style.color = 'red';
+        })
+        .finally(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            messageDiv.style.display = 'block';
+        });
+    });
+</script>
+</body>
+</html>
